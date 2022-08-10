@@ -1,0 +1,7 @@
+%{
+  "castore": {:hex, :castore, "0.1.18", "deb5b9ab02400561b6f5708f3e7660fc35ca2d51bfc6a940d2f513f89c2975fc", [:mix], [], "hexpm", "61bbaf6452b782ef80b33cdb45701afbcf0a918a45ebe7e73f1130d661e66a06"},
+  "esbuild": {:hex, :esbuild, "0.5.0", "d5bb08ff049d7880ee3609ed5c4b864bd2f46445ea40b16b4acead724fb4c4a3", [:mix], [{:castore, ">= 0.0.0", [hex: :castore, repo: "hexpm", optional: false]}], "hexpm", "f183a0b332d963c4cfaf585477695ea59eef9a6f2204fdd0efa00e099694ffe5"},
+  "kino": {:hex, :kino, "0.6.2", "3e8463ea19551f368c3dcbbf39d36b2627a33916598bfe87f51adc9aaab453fb", [:mix], [{:table, "~> 0.1.2", [hex: :table, repo: "hexpm", optional: false]}], "hexpm", "488cd83fa6efcdb4d5289c25daf842c44b33508fea048eb98f58132afc4ed513"},
+  "protean": {:git, "https://github.com/zachallaun/protean.git", "43e9b583a42c036bd31006047852ce86f44cca8b", []},
+  "table": {:hex, :table, "0.1.2", "87ad1125f5b70c5dea0307aa633194083eb5182ec537efc94e96af08937e14a8", [:mix], [], "hexpm", "7e99bc7efef806315c7e65640724bf165c3061cdc5d854060f74468367065029"},
+}

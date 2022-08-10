@@ -1,18 +1,7 @@
-defmodule ProteanKino do
+defmodule Protean.Kino do
   @moduledoc """
-  Documentation for `ProteanKino`.
+  Livebook visualization for Protean machines.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> ProteanKino.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
+  use Kino.JS, assets_path: "lib/assets"
 end

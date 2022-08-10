@@ -24,3 +24,8 @@ protean_kino-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+/priv/static/assets/
+/priv/static/cache_manifest.json
+/assets/node_modules
+npm-debug.log
