@@ -1,0 +1,164 @@
+<!-- livebook:{"persist_outputs":true} -->
+
+# Visualization
+
+## Section
+
+```elixir
+kino =
+  Protean.Kino.new(%{
+    transitions: [
+      %{
+        from: "off",
+        to: "on",
+        label: "switch flipped",
+        event: "switch flipped"
+      },
+      %{
+        from: "on",
+        to: "off",
+        label: "switch flipped",
+        event: "switch flipped"
+      }
+    ],
+    states: [
+      %{
+        name: "off",
+        type: "regular"
+      },
+      %{
+        name: "on",
+        type: "regular"
+      }
+    ]
+  })
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+warning: found quoted keyword "transitions" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:2:6
+
+warning: found quoted keyword "from" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:4:14
+
+warning: found quoted keyword "to" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:5:14
+
+warning: found quoted keyword "label" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:6:14
+
+warning: found quoted keyword "event" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:7:14
+
+warning: found quoted keyword "from" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:10:14
+
+warning: found quoted keyword "to" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:11:14
+
+warning: found quoted keyword "label" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:12:14
+
+warning: found quoted keyword "event" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:13:14
+
+warning: found quoted keyword "states" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:16:6
+
+warning: found quoted keyword "name" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:18:14
+
+warning: found quoted keyword "type" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:19:14
+
+warning: found quoted keyword "name" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:22:14
+
+warning: found quoted keyword "type" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:23:14
+
+```
+
+```elixir
+Protean.Kino.replace(kino, %{
+  transitions: [
+    %{
+      from: "OFF",
+      to: "on",
+      label: "switch flipped",
+      event: "switch flipped"
+    },
+    %{
+      from: "on",
+      to: "OFF",
+      label: "switch flipped",
+      event: "switch flipped"
+    }
+  ],
+  states: [
+    %{
+      name: "OFF",
+      type: "regular"
+    },
+    %{
+      name: "on",
+      type: "regular"
+    }
+  ]
+})
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+warning: found quoted keyword "transitions" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:2:6
+
+warning: found quoted keyword "from" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:4:14
+
+warning: found quoted keyword "to" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:5:14
+
+warning: found quoted keyword "label" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:6:14
+
+warning: found quoted keyword "event" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:7:14
+
+warning: found quoted keyword "from" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:10:14
+
+warning: found quoted keyword "to" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:11:14
+
+warning: found quoted keyword "label" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:12:14
+
+warning: found quoted keyword "event" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:13:14
+
+warning: found quoted keyword "states" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:16:6
+
+warning: found quoted keyword "name" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:18:14
+
+warning: found quoted keyword "type" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:19:14
+
+warning: found quoted keyword "name" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:22:14
+
+warning: found quoted keyword "type" but the quotes are not required. Note that keywords are always atoms, even when quoted. Similar to atoms, keywords made exclusively of ASCII letters, numbers, and underscores do not require quotes
+  notebooks/visualization.livemd#cell:23:14
+
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+:ok
+```

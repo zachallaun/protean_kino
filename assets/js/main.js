@@ -1,4 +1,4 @@
-import smcat from 'state-machine-cat'
+import smcat, { render } from 'state-machine-cat'
 
 const statechartToSVG = (ast) => {
   return smcat.render(ast, {
@@ -7,13 +7,17 @@ const statechartToSVG = (ast) => {
   })
 }
 
-export function init(ctx, ast) {
-  // ctx.root.innerHTML = JSON.stringify(smcat)
+const renderSVG = (ast, target) => {
   const svg = statechartToSVG(ast)
   const parser = new DOMParser()
   const svgNode = parser.parseFromString(svg, "image/svg+xml").documentElement
+  target.replaceChildren(svgNode)
+}
 
-  console.log(svgNode)
+export function init(ctx, ast) {
+  renderSVG(ast, ctx.root)
 
-  ctx.root.appendChild(svgNode)
+  ctx.handleEvent("replace", ast => {
+    renderSVG(ast, ctx.root)
+  })
 }
