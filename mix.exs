@@ -22,8 +22,7 @@ defmodule ProteanKino.MixProject do
   defp deps do
     [
       {:protean, github: "zachallaun/protean"},
-      {:kino, "~> 0.6.2"},
-      {:esbuild, "~> 0.5", only: :dev}
+      {:kino, "~> 0.6.2"}
     ]
   end
 end

@@ -1,8 +1,4 @@
-defmodule ProteanKinoTest do
+defmodule Protean.KinoTest do
   use ExUnit.Case
-  doctest ProteanKino
-
-  test "greets the world" do
-    assert ProteanKino.hello() == :world
-  end
+  doctest Protean.Kino
 end
