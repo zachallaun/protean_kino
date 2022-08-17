@@ -70,7 +70,7 @@ defmodule MyMachine do
           atomic(:sibling)
         ]
       ),
-      atomic(:sibling)
+      final(:sibling)
     ]
   ]
 
@@ -94,88 +94,10 @@ end
 ```
 {:ok,
  {:via, Registry,
-  {Protean.ProcessManager.Registry, {MyMachine, "b33c6244-f7e2-4ce4-982d-a207cb069c54"}}},
- "b33c6244-f7e2-4ce4-982d-a207cb069c54"}
+  {Protean.ProcessManager.Registry, {MyMachine, "48683a65-fb4f-487d-98a6-b99af704195a"}}},
+ "48683a65-fb4f-487d-98a6-b99af704195a"}
 ```
 
 ```elixir
 Protean.Kino.machine(MyMachine.__protean_machine__())
-```
-
-<!-- livebook:{"output":true} -->
-
-```
-[lib/protean_kino/machine.ex:9: Protean.Kino.Machine.new/1]
-ast #=> %{
-  states: [
-    %{
-      actions: [],
-      name: "#",
-      statemachine: %{
-        states: [
-          %{
-            actions: [%{body: ":foo", type: "entry"}],
-            name: "#.parallel",
-            statemachine: %{
-              states: [
-                %{
-                  actions: [],
-                  name: "#.parallel.parent",
-                  statemachine: %{
-                    states: [
-                      %{
-                        actions: [
-                          %{body: "{:send, :message, :self}", type: "entry"},
-                          %{body: "\"go do a thing\"", type: "exit"}
-                        ],
-                        name: "#.parallel.parent.child1",
-                        type: "regular"
-                      },
-                      %{
-                        actions: [],
-                        name: "#.parallel.parent.child2",
-                        type: "regular"
-                      }
-                    ],
-                    transitions: [
-                      %{
-                        action: "",
-                        from: "#.parallel.parent.child1",
-                        label: ":goto_child2",
-                        to: "#.parallel.parent.child2"
-                      },
-                      %{
-                        action: ":do_a_thing",
-                        from: "#.parallel.parent.child2",
-                        label: "%{foo: :bar} [{:not, :foo?}] / :do_a_thing",
-                        to: "#.parallel.parent.child2"
-                      }
-                    ]
-                  },
-                  type: "regular"
-                },
-                %{actions: [], name: "#.parallel.sibling", type: "regular"}
-              ],
-              transitions: [
-                %{
-                  action: ":one, :other",
-                  from: "#.parallel.parent",
-                  label: ":goto_sibling / :one, :other",
-                  to: "#.sibling"
-                }
-              ]
-            },
-            type: "parallel"
-          },
-          %{actions: [], name: "#.sibling", type: "regular"}
-        ],
-        transitions: []
-      },
-      type: "regular"
-    }
-  ],
-  transitions: []
-}
-
-
 ```
