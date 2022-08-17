@@ -4,7 +4,7 @@
 
 ```elixir
 Mix.install([
-  {:kino, path: "../kino/", override: true},
+  :phoenix_pubsub,
   {:protean, path: "../protean/"},
   {:protean_kino, path: "./"}
 ])
@@ -13,23 +13,8 @@ Mix.install([
 <!-- livebook:{"output":true} -->
 
 ```
-Resolving Hex dependencies...
-Dependency resolution completed:
-New:
-  table 0.1.2
-* Getting table (Hex package)
-==> protean
-Compiling 18 files (.ex)
-Generated protean app
-==> table
-Compiling 5 files (.ex)
-Generated table app
-==> kino
-Compiling 32 files (.ex)
-Generated kino app
 ==> protean_kino
-Compiling 2 files (.ex)
-Generated protean_kino app
+Compiling 1 file (.ex)
 ```
 
 <!-- livebook:{"output":true} -->
@@ -82,116 +67,41 @@ end
 ```
 {:ok,
  {:via, Registry,
-  {Protean.ProcessManager.Registry, {MyMachine, "0286aec8-f4e3-4a50-a21f-d7f3fadcfec3"}}},
- "0286aec8-f4e3-4a50-a21f-d7f3fadcfec3"}
+  {Protean.ProcessManager.Registry, {MyMachine, "54f51cb5-d5ff-4374-a4f6-dc0a8d47ead4"}}},
+ "54f51cb5-d5ff-4374-a4f6-dc0a8d47ead4"}
 ```
 
 ```elixir
-GenServer.whereis(machine)
+Protean.Kino.machine(MyMachine.__protean_machine__())
 ```
 
 <!-- livebook:{"output":true} -->
 
 ```
-#PID<0.830.0>
-```
-
-https://github.com/livebook-dev/kino/blob/v0.6.2/lib/kino/process.ex
-
-```elixir
-{master, root_supervisor} =
-  with master <- :application_controller.get_master(:protean),
-       {root, _app} <- :application_master.get_child(master) do
-    {master, root}
-  end
-```
-
-<!-- livebook:{"output":true} -->
-
-```
-{#PID<0.810.0>, #PID<0.812.0>}
-```
-
-```elixir
-root_supervisor
-|> GenServer.whereis()
-|> Supervisor.which_children()
-```
-
-<!-- livebook:{"output":true} -->
-
-```
-[
-  {Protean.PubSub.Adapter, :undefined, :worker, [Protean.PubSub]},
-  {Protean.ProcessManager, #PID<0.813.0>, :supervisor, [Protean.ProcessManager]}
-]
-```
-
-```elixir
-Kino.Process.app_tree(:protean)
-```
-
-```elixir
-kino =
-  Protean.Kino.machine(%{
-    transitions: [
-      %{
-        from: "off",
-        to: "on",
-        label: "switch flipped",
-        event: "switch flipped"
-      },
-      %{
-        from: "on",
-        to: "off",
-        label: "switch flipped",
-        event: "switch flipped"
-      }
-    ],
-    states: [
-      %{
-        name: "off",
-        type: "regular"
-      },
-      %{
-        name: "on",
-        type: "regular"
-      }
-    ]
-  })
-```
-
-```elixir
-Protean.Kino.Machine.replace(kino, %{
-  transitions: [
-    %{
-      from: "OFF",
-      to: "on",
-      label: "switch flipped",
-      event: "switch flipped"
-    },
-    %{
-      from: "on",
-      to: "OFF",
-      label: "switch flipped",
-      event: "switch flipped"
-    }
-  ],
+%{
   states: [
     %{
-      name: "OFF",
-      type: "regular"
-    },
-    %{
-      name: "on",
+      name: "#",
+      statemachine: %{
+        states: [
+          %{
+            name: "#.parent",
+            statemachine: %{
+              states: [
+                %{name: "#.parent.child1", type: "regular"},
+                %{name: "#.parent.child2", type: "regular"}
+              ],
+              transitions: [%{from: "#.parent.child1", to: "#.parent.child2"}]
+            },
+            type: "regular"
+          },
+          %{name: "#.sibling", type: "regular"}
+        ],
+        transitions: [%{from: "#.parent", to: "#.sibling"}]
+      },
       type: "regular"
     }
-  ]
-})
-```
-
-<!-- livebook:{"output":true} -->
-
-```
-:ok
+  ],
+  transitions: []
+}
 ```
