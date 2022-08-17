@@ -21,7 +21,6 @@ defmodule ProteanKino.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:protean, github: "zachallaun/protean"},
       {:kino, "~> 0.6.2"}
     ]
   end

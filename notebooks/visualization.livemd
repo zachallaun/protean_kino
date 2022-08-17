@@ -4,6 +4,8 @@
 
 ```elixir
 Mix.install([
+  {:kino, path: "../kino/", override: true},
+  {:protean, path: "../protean/"},
   {:protean_kino, path: "./"}
 ])
 ```
@@ -11,6 +13,20 @@ Mix.install([
 <!-- livebook:{"output":true} -->
 
 ```
+Resolving Hex dependencies...
+Dependency resolution completed:
+New:
+  table 0.1.2
+* Getting table (Hex package)
+==> protean
+Compiling 18 files (.ex)
+Generated protean app
+==> table
+Compiling 5 files (.ex)
+Generated table app
+==> kino
+Compiling 32 files (.ex)
+Generated kino app
 ==> protean_kino
 Compiling 2 files (.ex)
 Generated protean_kino app
@@ -23,6 +39,97 @@ Generated protean_kino app
 ```
 
 ## Section
+
+```elixir
+defmodule MyMachine do
+  use Protean
+
+  @machine [
+    initial: :parent,
+    states: [
+      compound(:parent,
+        initial: :child1,
+        on: [
+          match(:goto_sibling, target: :sibling)
+        ],
+        states: [
+          atomic(:child1,
+            on: [
+              match(:goto_child2, target: :child2)
+            ]
+          ),
+          atomic(:child2)
+        ]
+      ),
+      atomic(:sibling)
+    ]
+  ]
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, MyMachine, <<70, 79, 82, 49, 0, 0, 32, ...>>, :ok}
+```
+
+```elixir
+{:ok, machine, id} = Protean.start_machine(MyMachine)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:ok,
+ {:via, Registry,
+  {Protean.ProcessManager.Registry, {MyMachine, "0286aec8-f4e3-4a50-a21f-d7f3fadcfec3"}}},
+ "0286aec8-f4e3-4a50-a21f-d7f3fadcfec3"}
+```
+
+```elixir
+GenServer.whereis(machine)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+#PID<0.830.0>
+```
+
+https://github.com/livebook-dev/kino/blob/v0.6.2/lib/kino/process.ex
+
+```elixir
+{master, root_supervisor} =
+  with master <- :application_controller.get_master(:protean),
+       {root, _app} <- :application_master.get_child(master) do
+    {master, root}
+  end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{#PID<0.810.0>, #PID<0.812.0>}
+```
+
+```elixir
+root_supervisor
+|> GenServer.whereis()
+|> Supervisor.which_children()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+[
+  {Protean.PubSub.Adapter, :undefined, :worker, [Protean.PubSub]},
+  {Protean.ProcessManager, #PID<0.813.0>, :supervisor, [Protean.ProcessManager]}
+]
+```
+
+```elixir
+Kino.Process.app_tree(:protean)
+```
 
 ```elixir
 kino =
