@@ -21,7 +21,8 @@ defmodule ProteanKino.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:kino, "~> 0.6.2"}
+      {:kino, "~> 0.6.2", optional: true},
+      {:protean, "~> 0.1.0-alpha.3", optional: true}
     ]
   end
 end

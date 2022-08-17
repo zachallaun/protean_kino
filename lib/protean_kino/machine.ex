@@ -6,7 +6,6 @@ defmodule Protean.Kino.Machine do
 
   def new(config) do
     ast = smcat_ast([config.root])
-    IO.inspect(ast)
     Kino.JS.Live.new(__MODULE__, ast)
   end
 
@@ -65,20 +64,70 @@ defmodule Protean.Kino.Machine do
 
   defp node_common(node) do
     %{
-      name: human_id(node.id)
+      name: human_id(node.id),
+      actions: entry_actions(node) ++ exit_actions(node)
     }
+  end
+
+  defp entry_actions(node) do
+    List.wrap(node.entry)
+    |> Enum.map(&smcat_action(&1, "entry"))
+  end
+
+  defp exit_actions(node) do
+    List.wrap(node.exit)
+    |> Enum.map(&smcat_action(&1, "exit"))
+  end
+
+  defp smcat_action(action, type) do
+    %{type: type, body: action_description(action)}
+  end
+
+  defp action_description(%Protean.Action{module: Protean.Action, arg: arg}) do
+    inspect(arg)
+  end
+
+  defp action_description(action) do
+    inspect(action)
   end
 
   defp smcat_transitions(node) do
     node_id = human_id(node.id)
 
     Enum.map(node.transitions, fn transition ->
+      actions =
+        transition.actions
+        |> Enum.map(&action_description/1)
+        |> Enum.join(", ")
+
       %{
         from: node_id,
-        to: human_id(hd(transition.target_ids))
+        to: human_id(hd(transition.target_ids)),
+        label: smcat_event(transition),
+        action: actions
       }
     end)
   end
+
+  defp smcat_event(transition) do
+    transition
+    |> format_event()
+    |> maybe_add_guard(transition)
+    |> maybe_add_actions(transition)
+  end
+
+  defp maybe_add_guard(s, %{guard: nil}), do: s
+  defp maybe_add_guard(s, %{guard: guard}), do: s <> " [#{inspect(guard)}]"
+
+  defp maybe_add_actions(s, %{actions: []}), do: s
+
+  defp maybe_add_actions(s, %{actions: actions}) do
+    action_s = actions |> Enum.map(&action_description/1) |> Enum.join(", ")
+    s <> " / " <> action_s
+  end
+
+  defp format_event(%{_meta: %{expr: expr}}), do: Macro.to_string(expr)
+  defp format_event(%{match?: value}), do: inspect(value)
 
   defp human_id(node_id) do
     node_id
